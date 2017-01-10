@@ -6,7 +6,7 @@
 /*   By: hsabouri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/04 20:20:52 by hsabouri          #+#    #+#             */
-/*   Updated: 2017/01/08 16:46:28 by hsabouri         ###   ########.fr       */
+/*   Updated: 2017/01/10 17:01:12 by hsabouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@
 # include <stdlib.h>
 # include <stdio.h>
 # define TITLE "Wolf-3D"
-# define WIDTH 400
-# define HEIGHT 400
+# define WIDTH 1920
+# define HEIGHT 1080
 # define IMGSIZE WIDTH * HEIGHT * 32
 
 # define KEYPRESSEVENT 2
@@ -65,6 +65,8 @@ typedef struct	s_map
 	t_color	south;
 	t_color	floor;
 	t_color	sky;
+	t_color	fog;
+	double	fog_dis;
 	char	*map;
 }				t_map;
 
@@ -80,6 +82,24 @@ typedef struct	s_env
 	int			keystatus[127];
 }				t_env;
 
+typedef struct	s_raycast
+{
+	int		step_x;
+	int		step_y;
+	int		map_x;
+	int		map_y;
+	int		side;
+	double	ux;
+	double	uy;
+	double	side_x;
+	double	side_y;
+	double	delta_x;
+	double	delta_y;
+	double	angle;
+	double	dis;
+	t_color	color;
+}				t_raycast;
+
 int		abs_i(int n);
 double	abs_d(double n);
 
@@ -93,5 +113,11 @@ int			keypress(int keycode, t_env *env);
 int			keyrelease(int keycode, t_env *env);
 void		keyboard(t_env *env);
 int			g_loop(t_env *env);
+
+t_player	m_left(t_player player);
+t_player	m_right(t_player player);
+t_player	m_forward(t_player player);
+t_player	m_backward(t_player player);
+t_player	m_rotate(t_player, double angle);
 
 #endif

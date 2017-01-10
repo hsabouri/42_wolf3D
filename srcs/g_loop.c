@@ -6,94 +6,110 @@
 /*   By: hsabouri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/06 15:14:52 by hsabouri          #+#    #+#             */
-/*   Updated: 2017/01/08 17:47:59 by hsabouri         ###   ########.fr       */
+/*   Updated: 2017/01/10 18:08:57 by hsabouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf.h"
 
-t_image	g_raytrace(t_env env, int col, double distance)
+t_color		g_col_dis(t_env env, t_color color, double dis)
 {
-	int i;
-	int	height;
+	double ir;
+	double ig;
+	double ib;
+
+	ir = (env.map.fog.red - color.red) / env.map.fog_dis;
+	ig = (env.map.fog.green - color.green) / env.map.fog_dis;
+	ib = (env.map.fog.blue - color.blue) / env.map.fog_dis;
+	color.red += (dis < env.map.fog_dis) ? ir * dis : ir * env.map.fog_dis;
+	color.green += (dis < env.map.fog_dis) ? ig * dis : ig * env.map.fog_dis;
+	color.blue += (dis < env.map.fog_dis) ? ib * dis : ib * env.map.fog_dis;
+	return (color);
+}
+
+t_image		g_draw(t_env env, int col, t_raycast ray)
+{
+	int		i;
+	int		h;
+	double	realdis;
 
 	i = 0;
-	height = (double)(200 / distance);
+	realdis = (ray.dis * cos(env.player.angle - ray.angle));
+	h = (env.height * 1.40 / realdis);
 	while (i < env.height)
 	{
-		if (i < env.height / 2 - height / 2)
+		if (i < env.height / 2 - h / 2)
 			env.screen = g_pixel_put(env.screen, col, i, env.map.sky);
-		else if (i < env.height / 2 + height / 2 )
-			env.screen = g_pixel_put(env.screen, col, i, env.map.west);
+		else if (i < env.height / 2 + h / 2 )
+			env.screen = g_pixel_put(env.screen, col, i,\
+			g_col_dis(env, ray.color, realdis));
 		else
-			env.screen = g_pixel_put(env.screen, col, i, env.map.floor);
+			env.screen = g_pixel_put(env.screen, col, i, env.map.sky);
 		i++;
 	}
 	return (env.screen);
 }
 
-int		g_loop(t_env *env)
+t_raycast	g_raytrace(t_env env, t_raycast ray)
 {
-	double	init_x;
-	double	init_y;
-	double	delta_x;
-	double	delta_y;
-	double	angle;
-	double	rx;
-	double	ry;
-	double	dist;
-	int		map_x;
-	int		map_y;
-	int		step_x;
-	int		step_y;
-	int		side;
-	int		i;
+	while (1)
+	{
+		if (ray.side_x < ray.side_y)
+		{
+			ray.side_x += ray.delta_x;
+			ray.map_x += ray.step_x;
+			ray.side = 0;
+		}
+		else
+		{
+			ray.side_y += ray.delta_y;
+			ray.map_y += ray.step_y;
+			ray.side = 1;
+		}
+		if (ray.map_x < 0 || ray.map_x >= env.map.width || ray.map_y < 0 ||
+		ray.map_y >= env.map.width ||
+		env.map.map[(ray.map_y * env.map.width) + ray.map_x] == '\1')
+			break;
+	}
+	if (env.player.x > ray.map_x && ray.side == 0)
+		ray.color = env.map.east;
+	else if (env.player.x < ray.map_x && ray.side == 0)
+		ray.color = env.map.west;
+	else if (env.player.y < ray.map_y && ray.side == 1)
+		ray.color = env.map.north;
+	else
+		ray.color = env.map.south;
+	return (ray);
+}
 
-	keyboard(env);
+int			g_loop(t_env *env)
+{
+	int			i;
+	t_raycast	ray;
+
 	i = 0;
-	angle = env->player.angle - (env->player.fov * M_PI) / 2;
+	keyboard(env);
 	while (i < env->width)
 	{
-		rx = cos(angle);
-		ry = sin(angle);
-		map_x = (int)env->player.x;
-		map_y = (int)env->player.y;
-		delta_x = sqrt(1 + (ry * ry) / (rx * rx));
-		delta_y = sqrt(1 + (rx * rx) / (ry * ry));
-		init_x = (rx < 0) ? (env->player.x - map_x) * delta_x : 
-			map_x + 1.0 - env->player.x;
-		init_y = (ry < 0) ? (env->player.y - map_y) * delta_y : 
-			map_y + 1.0 - env->player.y;
-		step_x = (rx < 0) ? -1 : 1;
-		step_y = (ry < 0) ? -1 : 1;
-		angle += env->player.fov / env->width * M_PI;
-		while (1)
-		{
-			if (init_x < init_y)
-			{
-				init_x += delta_x;
-				map_x += step_x;
-				side = 0;
-			}
-			else
-			{
-				init_y += delta_y;
-				map_y += step_y;
-				side = 1;
-			}
-			if (map_x >= 0 && map_x < env->map.width && map_y >= 0 && map_y < env->map.width)
-			{
-				if (env->map.map[(env->map.width * map_y) + map_x] == '\1')
-					break;
-			}
-			else
-				break;
-		}
-		if (!side)
-			dist = ((map_x - env->player.x + (1 - step_x) / 2) / rx);
-		else
-			dist = ((map_y - env->player.y + (1 - step_y) / 2) / ry);
-		env->screen = g_raytrace(*env, i, dist);
+		ray.angle = env->player.angle - (M_PI * env->player.fov / 2) +
+			(M_PI * env->player.fov / env->width) * i;
+		ray.ux = cos(ray.angle);
+		ray.uy = sin(ray.angle);
+		ray.map_x = (int)env->player.x;
+		ray.map_y = (int)env->player.y;
+		ray.delta_x = sqrt(1 + (ray.uy * ray.uy) / (ray.ux * ray.ux));
+		ray.delta_y = sqrt(1 + (ray.ux * ray.ux) / (ray.uy * ray.uy));
+		ray.side_x = ((ray.ux < 0) ? (env->player.x - ray.map_x) * ray.delta_x :
+			(ray.map_x + 1 - env->player.x) * ray.delta_x);
+		ray.side_y = ((ray.uy < 0) ? (env->player.y - ray.map_y) * ray.delta_y :
+			(ray.map_y + 1 - env->player.y) * ray.delta_y);
+		ray.step_x = ((ray.ux < 0) ? -1 : 1);
+		ray.step_y = ((ray.uy < 0) ? -1 : 1);
+		ray = g_raytrace(*env, ray);
+		ray.dis = (ray.side == 0) ?
+			abs_d((ray.map_x - env->player.x + (1 - ray.step_x) / 2) / ray.ux) :
+			abs_d((ray.map_y - env->player.y + (1 - ray.step_y) / 2) / ray.uy);
+		env->screen = g_draw(*env, i, ray);
 		i++;
 	}
 	g_refresh_win(env->screen, *env);
