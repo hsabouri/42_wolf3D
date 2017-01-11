@@ -6,7 +6,7 @@
 /*   By: hsabouri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/04 20:20:52 by hsabouri          #+#    #+#             */
-/*   Updated: 2017/01/10 17:01:12 by hsabouri         ###   ########.fr       */
+/*   Updated: 2017/01/11 15:50:47 by hsabouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@
 # define KEYPRESSMASK (1L << 0)
 # define KEYRELEASEEVENT 3
 # define KEYRELEASEMASK (1L << 1)
+# define MOTIONNOTIFY 6
+# define POINTERMOTIONMASK (1L<<6)
 
 typedef struct	s_image
 {
@@ -107,17 +109,22 @@ t_image		g_pixel_put(t_image image, int x, int y, t_color color);
 t_image		g_new_image(t_env env);
 void		g_refresh_win(t_image image, t_env env);
 
-t_env		env_init(void);
+t_raycast	ray_init(t_env *env, int i);
+t_raycast	m_raytrace(t_env env, t_raycast ray);
+
+t_env		env_init(char *filename);
 
 int			keypress(int keycode, t_env *env);
 int			keyrelease(int keycode, t_env *env);
 void		keyboard(t_env *env);
+int			g_mouse_click(int button, int x, int y, t_env *env);
+int			g_mouse(int x, int y, t_env *env);
 int			g_loop(t_env *env);
 
-t_player	m_left(t_player player);
-t_player	m_right(t_player player);
-t_player	m_forward(t_player player);
-t_player	m_backward(t_player player);
+t_player	m_left(t_env env, t_player player);
+t_player	m_right(t_env env, t_player player);
+t_player	m_forward(t_env env, t_player player);
+t_player	m_backward(t_env env, t_player player);
 t_player	m_rotate(t_player, double angle);
 
 #endif

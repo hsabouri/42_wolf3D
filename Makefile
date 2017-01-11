@@ -6,7 +6,7 @@
 #    By: hsabouri <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/08/19 10:32:42 by hsabouri          #+#    #+#              #
-#    Updated: 2017/01/10 16:44:21 by hsabouri         ###   ########.fr        #
+#    Updated: 2017/01/11 15:51:08 by hsabouri         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,9 +22,9 @@ LDFLAGS = -L $(LIBPATH) -l$(LIBNAME:lib%.a=%) -lmlx -framework OpenGL\
 CC = gcc
 SRCDIR = srcs
 SRCS = main.c init.c\
-	   m_abs.c m_transformations.c\
+	   m_abs.c m_transformations.c m_raycast.c\
 	   g_image.c\
-	   g_keyboard.c\
+	   g_keyboard.c g_mouse.c\
 	   g_loop.c
 SRC = $(SRCS:%.c=$(SRCDIR)/%.c)
 LIBINC = $(LIBPATH)/includes/

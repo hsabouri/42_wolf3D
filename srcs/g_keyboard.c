@@ -6,7 +6,7 @@
 /*   By: hsabouri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/06 13:01:18 by hsabouri          #+#    #+#             */
-/*   Updated: 2017/01/10 17:48:00 by hsabouri         ###   ########.fr       */
+/*   Updated: 2017/01/11 13:29:30 by hsabouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 void	keyboard(t_env *env)
 {
 	if (env->keystatus[A])
-		env->player = m_left(env->player);
+		env->player = m_left(*env, env->player);
 	if (env->keystatus[D])
-		env->player = m_right(env->player);
+		env->player = m_right(*env, env->player);
 	if (env->keystatus[W])
-		env->player = m_forward(env->player);
+		env->player = m_forward(*env, env->player);
 	if (env->keystatus[S])
-		env->player = m_backward(env->player);
+		env->player = m_backward(*env, env->player);
 	if (env->keystatus[LT])
 		env->player = m_rotate(env->player, - M_PI / 40);
 	if (env->keystatus[RT])

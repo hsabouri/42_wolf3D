@@ -1,28 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   g_mouse.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hsabouri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/01/04 20:20:20 by hsabouri          #+#    #+#             */
-/*   Updated: 2017/01/11 15:28:40 by hsabouri         ###   ########.fr       */
+/*   Created: 2017/01/11 14:20:06 by hsabouri          #+#    #+#             */
+/*   Updated: 2017/01/11 15:51:41 by hsabouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf.h"
 
-int	main(void)
+int	g_mouse(int x, int y, t_env *env)
 {
-	t_env	env;
+	return (0);
+}
 
-	env = env_init("yay");
-	mlx_hook(env.win, KEYPRESSEVENT, KEYPRESSMASK, &keypress, &env);
-	mlx_hook(env.win, KEYRELEASEEVENT, KEYRELEASEMASK, &keyrelease, &env);
-	mlx_hook(env.win, MOTIONNOTIFY, POINTERMOTIONMASK, &g_mouse, &env);
-	mlx_mouse_hook(env.win, &g_mouse_click, &env);
-	g_refresh_win(env.screen, env);
-	mlx_loop_hook(env.mlx, &g_loop, &env);
-	mlx_loop(env.mlx);
+int	g_mouse_click(int button, int x, int y, t_env *env)
+{
 	return (0);
 }
