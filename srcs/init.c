@@ -6,7 +6,7 @@
 /*   By: hsabouri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/05 16:58:32 by hsabouri          #+#    #+#             */
-/*   Updated: 2017/01/12 12:43:15 by hsabouri         ###   ########.fr       */
+/*   Updated: 2017/01/12 14:45:43 by hsabouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ static t_player	player_init(t_env env)
 	player.y = 10;
 	player.angle = 0;
 	player.fov = 0.40;
+	player.speed = 1;
 	return (player);
 }
 

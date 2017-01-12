@@ -6,7 +6,7 @@
 /*   By: hsabouri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/04 20:20:52 by hsabouri          #+#    #+#             */
-/*   Updated: 2017/01/12 12:29:18 by hsabouri         ###   ########.fr       */
+/*   Updated: 2017/01/12 14:45:44 by hsabouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ typedef struct	s_player
 	double	fov;
 	double	ux;
 	double	uy;
+	double	speed;
 }				t_player;
 
 typedef struct	s_map

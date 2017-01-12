@@ -6,7 +6,7 @@
 /*   By: hsabouri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/10 12:06:24 by hsabouri          #+#    #+#             */
-/*   Updated: 2017/01/11 15:16:31 by hsabouri         ###   ########.fr       */
+/*   Updated: 2017/01/12 14:45:41 by hsabouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ t_player	m_left(t_env env, t_player player)
 	double x;
 	double y;
 
-	x = cos(player.angle - M_PI / 2) / 10;
-	y = sin(player.angle - M_PI / 2) / 10;
+	x = (cos(player.angle - M_PI / 2) / 10) * player.speed;
+	y = (sin(player.angle - M_PI / 2) / 10) * player.speed;
 	if (player.x + x >= 0 && player.x + x < env.map.width)
 	{
 		if (env.map.map[(int)(player.y) * env.map.width +
@@ -39,8 +39,8 @@ t_player	m_right(t_env env, t_player player)
 	double x;
 	double y;
 
-	x = cos(player.angle - M_PI / 2) / 10;
-	y = sin(player.angle - M_PI / 2) / 10;
+	x = (cos(player.angle - M_PI / 2) / 10) * player.speed;
+	y = (sin(player.angle - M_PI / 2) / 10) * player.speed;
 	if (player.x - x >= 0 && player.x - x < env.map.width)
 	{
 		if (env.map.map[(int)(player.y) * env.map.width +
@@ -61,8 +61,8 @@ t_player	m_forward(t_env env, t_player player)
 	double x;
 	double y;
 
-	x = cos(player.angle) / 10;
-	y = sin(player.angle) / 10;
+	x = (cos(player.angle) / 10) * player.speed;
+	y = (sin(player.angle) / 10) * player.speed;
 	if (player.x + x >= 0 && player.x + x < env.map.width)
 	{
 		if (env.map.map[(int)(player.y) * env.map.width +
@@ -83,8 +83,8 @@ t_player	m_backward(t_env env, t_player player)
 	double x;
 	double y;
 
-	x = cos(player.angle) / 10;
-	y = sin(player.angle) / 10;
+	x = (cos(player.angle) / 10) * player.speed;
+	y = (sin(player.angle) / 10) * player.speed;
 	if (player.x - x >= 0 && player.x - x < env.map.width)
 	{
 		if (env.map.map[(int)(player.y) * env.map.width +
