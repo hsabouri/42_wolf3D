@@ -6,7 +6,7 @@
 /*   By: hsabouri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/06 13:01:18 by hsabouri          #+#    #+#             */
-/*   Updated: 2017/01/11 13:29:30 by hsabouri         ###   ########.fr       */
+/*   Updated: 2017/01/12 12:11:33 by hsabouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	keyboard(t_env *env)
 	if (env->keystatus[S])
 		env->player = m_backward(*env, env->player);
 	if (env->keystatus[LT])
-		env->player = m_rotate(env->player, - M_PI / 40);
+		env->player = m_rotate(env->player, -M_PI / 40);
 	if (env->keystatus[RT])
 		env->player = m_rotate(env->player, M_PI / 40);
 	if (env->keystatus[SUB])
@@ -42,7 +42,7 @@ void	keyboard(t_env *env)
 
 int		keypress(int keycode, t_env *env)
 {
-	if (keycode < 127  && keycode >= 0)
+	if (keycode < 127 && keycode >= 0)
 		(env->keystatus)[keycode] = 1;
 	if (keycode == ESC)
 		exit(EXIT_SUCCESS);

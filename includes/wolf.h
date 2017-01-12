@@ -6,7 +6,7 @@
 /*   By: hsabouri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/04 20:20:52 by hsabouri          #+#    #+#             */
-/*   Updated: 2017/01/11 15:50:47 by hsabouri         ###   ########.fr       */
+/*   Updated: 2017/01/12 12:29:18 by hsabouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@
 # define KEYPRESSMASK (1L << 0)
 # define KEYRELEASEEVENT 3
 # define KEYRELEASEMASK (1L << 1)
-# define MOTIONNOTIFY 6
-# define POINTERMOTIONMASK (1L<<6)
+# define DESTROYNOTIFY 17
+# define STRUCTURENOTIFYMASK (1L<<17)
 
 typedef struct	s_image
 {
@@ -69,7 +69,7 @@ typedef struct	s_map
 	t_color	sky;
 	t_color	fog;
 	double	fog_dis;
-	char	*map;
+	char	map[625];
 }				t_map;
 
 typedef struct	s_env
@@ -78,6 +78,8 @@ typedef struct	s_env
 	t_player	player;
 	int			width;
 	int			height;
+	int			px;
+	int			py;
 	t_image		screen;
 	void		*mlx;
 	void		*win;
@@ -90,6 +92,8 @@ typedef struct	s_raycast
 	int		step_y;
 	int		map_x;
 	int		map_y;
+	int		next_x;
+	int		next_y;
 	int		side;
 	double	ux;
 	double	uy;
@@ -102,29 +106,31 @@ typedef struct	s_raycast
 	t_color	color;
 }				t_raycast;
 
-int		abs_i(int n);
-double	abs_d(double n);
+int				abs_i(int n);
+double			abs_d(double n);
 
-t_image		g_pixel_put(t_image image, int x, int y, t_color color);
-t_image		g_new_image(t_env env);
-void		g_refresh_win(t_image image, t_env env);
+t_image			g_pixel_put(t_image image, int x, int y, t_color color);
+t_image			g_new_image(t_env env);
+void			g_refresh_win(t_image image, t_env env);
 
-t_raycast	ray_init(t_env *env, int i);
-t_raycast	m_raytrace(t_env env, t_raycast ray);
+t_raycast		ray_init(t_env *env, int i);
+t_raycast		m_raytrace(t_env *env, t_raycast ray);
 
-t_env		env_init(char *filename);
+t_env			env_init(void);
 
-int			keypress(int keycode, t_env *env);
-int			keyrelease(int keycode, t_env *env);
-void		keyboard(t_env *env);
-int			g_mouse_click(int button, int x, int y, t_env *env);
-int			g_mouse(int x, int y, t_env *env);
-int			g_loop(t_env *env);
+int				keypress(int keycode, t_env *env);
+int				keyrelease(int keycode, t_env *env);
+void			keyboard(t_env *env);
+int				g_mouse_click(int button, int x, int y, t_env *env);
+int				g_mouse(int x, int y, t_env *env);
+int				g_loop(t_env *env);
 
-t_player	m_left(t_env env, t_player player);
-t_player	m_right(t_env env, t_player player);
-t_player	m_forward(t_env env, t_player player);
-t_player	m_backward(t_env env, t_player player);
-t_player	m_rotate(t_player, double angle);
+t_player		m_left(t_env env, t_player player);
+t_player		m_right(t_env env, t_player player);
+t_player		m_forward(t_env env, t_player player);
+t_player		m_backward(t_env env, t_player player);
+t_player		m_rotate(t_player player, double angle);
+
+int				destroy(t_env *env);
 
 #endif

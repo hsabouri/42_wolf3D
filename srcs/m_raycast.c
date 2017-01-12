@@ -6,7 +6,7 @@
 /*   By: hsabouri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/11 15:39:50 by hsabouri          #+#    #+#             */
-/*   Updated: 2017/01/11 15:51:17 by hsabouri         ###   ########.fr       */
+/*   Updated: 2017/01/12 12:12:32 by hsabouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,41 @@ t_raycast	ray_init(t_env *env, int i)
 	return (ray);
 }
 
-t_raycast	m_raytrace(t_env env, t_raycast ray)
+t_raycast	m_orientation(t_env *env, t_raycast ray)
+{
+	if (env->player.x > ray.map_x && ray.side == 0)
+	{
+		ray.color = env->map.east;
+		ray.next_x = ray.map_x + 1;
+		ray.next_y = ray.map_y;
+	}
+	else if (env->player.x < ray.map_x && ray.side == 0)
+	{
+		ray.color = env->map.west;
+		ray.next_x = ray.map_x - 1;
+		ray.next_y = ray.map_y;
+	}
+	else if (env->player.y < ray.map_y && ray.side == 1)
+	{
+		ray.color = env->map.north;
+		ray.next_x = ray.map_x;
+		ray.next_y = ray.map_y - 1;
+	}
+	else
+	{
+		ray.color = env->map.south;
+		ray.next_x = ray.map_x;
+		ray.next_y = ray.map_y + 1;
+	}
+	return (ray);
+}
+
+t_raycast	m_raytrace(t_env *env, t_raycast ray)
 {
 	int i;
 
 	i = 0;
-	while (i < env.map.fog_dis * 1.5)
+	while (i < env->map.fog_dis * 1.5)
 	{
 		if (ray.side_x < ray.side_y)
 		{
@@ -52,19 +81,12 @@ t_raycast	m_raytrace(t_env env, t_raycast ray)
 			ray.map_y += ray.step_y;
 			ray.side = 1;
 		}
-		if (ray.map_x < 0 || ray.map_x >= env.map.width || ray.map_y < 0 ||
-		ray.map_y >= env.map.width ||
-		env.map.map[(ray.map_y * env.map.width) + ray.map_x] == '\1')
-			break;
+		if (ray.map_x < 0 || ray.map_x >= env->map.width || ray.map_y < 0 ||
+		ray.map_y >= env->map.width ||
+		env->map.map[(ray.map_y * env->map.width) + ray.map_x] == '\1')
+			break ;
 		i++;
 	}
-	if (env.player.x > ray.map_x && ray.side == 0)
-		ray.color = env.map.east;
-	else if (env.player.x < ray.map_x && ray.side == 0)
-		ray.color = env.map.west;
-	else if (env.player.y < ray.map_y && ray.side == 1)
-		ray.color = env.map.north;
-	else
-		ray.color = env.map.south;
+	ray = m_orientation(env, ray);
 	return (ray);
 }

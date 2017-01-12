@@ -6,7 +6,7 @@
 #    By: hsabouri <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/08/19 10:32:42 by hsabouri          #+#    #+#              #
-#    Updated: 2017/01/11 15:51:08 by hsabouri         ###   ########.fr        #
+#    Updated: 2017/01/12 12:29:54 by hsabouri         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,8 @@ SRCS = main.c init.c\
 	   m_abs.c m_transformations.c m_raycast.c\
 	   g_image.c\
 	   g_keyboard.c g_mouse.c\
-	   g_loop.c
+	   g_loop.c\
+	   g_destroy.c
 SRC = $(SRCS:%.c=$(SRCDIR)/%.c)
 LIBINC = $(LIBPATH)/includes/
 INC = includes

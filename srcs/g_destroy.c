@@ -1,28 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   g_destroy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hsabouri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/01/04 20:20:20 by hsabouri          #+#    #+#             */
-/*   Updated: 2017/01/12 12:27:28 by hsabouri         ###   ########.fr       */
+/*   Created: 2017/01/12 12:27:42 by hsabouri          #+#    #+#             */
+/*   Updated: 2017/01/12 12:32:19 by hsabouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf.h"
 
-int	main(void)
+int	destroy(t_env *env)
 {
-	t_env	env;
-
-	env = env_init();
-	mlx_hook(env.win, KEYPRESSEVENT, KEYPRESSMASK, &keypress, &env);
-	mlx_hook(env.win, KEYRELEASEEVENT, KEYRELEASEMASK, &keyrelease, &env);
-	mlx_hook(env.win, DESTROYNOTIFY, STRUCTURENOTIFYMASK, &destroy, &env);
-	mlx_mouse_hook(env.win, &g_mouse_click, &env);
-	g_refresh_win(env.screen, env);
-	mlx_loop_hook(env.mlx, &g_loop, &env);
-	mlx_loop(env.mlx);
+	env->px = env->px;
+	exit(EXIT_SUCCESS);
 	return (0);
 }

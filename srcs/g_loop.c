@@ -6,7 +6,7 @@
 /*   By: hsabouri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/06 15:14:52 by hsabouri          #+#    #+#             */
-/*   Updated: 2017/01/11 15:50:04 by hsabouri         ###   ########.fr       */
+/*   Updated: 2017/01/12 12:12:10 by hsabouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ t_image		g_draw(t_env env, int col, t_raycast ray)
 		if (i < env.height / 2 - h / 2)
 			env.screen = g_pixel_put(env.screen, col, i,\
 			g_grad_i(env, env.map.sky, i));
-		else if (i < env.height / 2 + h / 2 )
+		else if (i < env.height / 2 + h / 2)
 			env.screen = g_pixel_put(env.screen, col, i,\
 			g_col_dis(env, ray.color, ray.dis));
 		else
@@ -79,7 +79,7 @@ int			g_loop(t_env *env)
 	while (i < env->width)
 	{
 		ray = ray_init(env, i);
-		ray = m_raytrace(*env, ray);
+		ray = m_raytrace(env, ray);
 		ray.dis = (ray.side == 0) ?
 			abs_d((ray.map_x - env->player.x + (1 - ray.step_x) / 2) / ray.ux) :
 			abs_d((ray.map_y - env->player.y + (1 - ray.step_y) / 2) / ray.uy);
