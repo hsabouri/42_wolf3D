@@ -6,7 +6,7 @@
 /*   By: hsabouri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/04 20:20:52 by hsabouri          #+#    #+#             */
-/*   Updated: 2017/01/12 14:45:44 by hsabouri         ###   ########.fr       */
+/*   Updated: 2017/01/12 15:14:04 by hsabouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@
 # define KEYPRESSMASK (1L << 0)
 # define KEYRELEASEEVENT 3
 # define KEYRELEASEMASK (1L << 1)
+# define POINTERMOTIONMASK (1L<<6)
+# define MOTIONNOTIFY 6
 # define DESTROYNOTIFY 17
 # define STRUCTURENOTIFYMASK (1L<<17)
 

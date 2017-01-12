@@ -6,18 +6,24 @@
 /*   By: hsabouri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/06 15:14:52 by hsabouri          #+#    #+#             */
-/*   Updated: 2017/01/12 12:12:10 by hsabouri         ###   ########.fr       */
+/*   Updated: 2017/01/12 15:22:44 by hsabouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf.h"
 
-t_color		g_col_dis(t_env env, t_color color, double dis)
+t_color		g_col_dis(t_env env, t_color color, double dis, t_raycast ray)
 {
 	float ir;
 	float ig;
 	float ib;
 
+	if (env.map.map[ray.map_x + (ray.map_y * env.map.width)] == '\3')
+	{
+		color.red = 255;
+		color.green = 100;
+		color.blue = 100;
+	}
 	ir = (env.map.fog.red - color.red) / env.map.fog_dis;
 	ig = (env.map.fog.green - color.green) / env.map.fog_dis;
 	ib = (env.map.fog.blue - color.blue) / env.map.fog_dis;
@@ -60,7 +66,7 @@ t_image		g_draw(t_env env, int col, t_raycast ray)
 			g_grad_i(env, env.map.sky, i));
 		else if (i < env.height / 2 + h / 2)
 			env.screen = g_pixel_put(env.screen, col, i,\
-			g_col_dis(env, ray.color, ray.dis));
+			g_col_dis(env, ray.color, ray.dis, ray));
 		else
 			env.screen = g_pixel_put(env.screen, col, i,\
 			g_grad_i(env, env.map.floor, abs_i(i - env.height)));

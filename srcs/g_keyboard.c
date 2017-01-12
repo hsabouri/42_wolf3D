@@ -6,7 +6,7 @@
 /*   By: hsabouri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/06 13:01:18 by hsabouri          #+#    #+#             */
-/*   Updated: 2017/01/12 12:11:33 by hsabouri         ###   ########.fr       */
+/*   Updated: 2017/01/12 14:55:04 by hsabouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	keyboard(t_env *env)
 	if (env->keystatus[N6])
 		env->map.fog_dis -= 0.05;
 	if (env->keystatus[SLASH])
-		env->map.fog_dis = 20;
+		env->map.fog_dis = 30;
 }
 
 int		keypress(int keycode, t_env *env)

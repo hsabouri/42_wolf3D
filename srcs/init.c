@@ -6,7 +6,7 @@
 /*   By: hsabouri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/05 16:58:32 by hsabouri          #+#    #+#             */
-/*   Updated: 2017/01/12 14:45:43 by hsabouri         ###   ########.fr       */
+/*   Updated: 2017/01/12 14:53:21 by hsabouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static t_map	map_init(void)
 	map.floor = (t_color){50, 50, 50, 0};
 	map.sky = (t_color){60, 60, 60, 0};
 	map.fog = (t_color){0, 0, 0, 0};
-	map.fog_dis = 20;
+	map.fog_dis = 30;
 	return (map);
 }
 

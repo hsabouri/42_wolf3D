@@ -6,11 +6,38 @@
 /*   By: hsabouri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/11 14:20:06 by hsabouri          #+#    #+#             */
-/*   Updated: 2017/01/12 14:45:43 by hsabouri         ###   ########.fr       */
+/*   Updated: 2017/01/12 15:25:53 by hsabouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf.h"
+
+int	g_mouse(int x, int y, t_env *env)
+{
+	t_raycast	ray;
+	int			i;
+
+	i = 0;
+	while (i < env->map.width * env->map.height)
+	{
+		if (env->map.map[i % env->map.width +\
+		(i / env->map.height) * env->map.width] == '\3')
+		{
+			env->map.map[i % env->map.width +
+			(i / env->map.height) * env->map.width] = '\1';
+		}
+		i++;
+	}
+	if (x < env->width && x >= 0 && y < env->height && y >= 0)
+	{
+		ray = ray_init(env, x);
+		ray = m_raytrace(env, ray);
+		if (ray.map_x >= 0 && ray.map_x < env->map.width && ray.map_y >= 0 &&\
+		ray.map_y < env->map.height)
+			env->map.map[ray.map_x + (ray.map_y * env->map.width)] = '\3';
+	}
+	return (0);
+}
 
 int	g_mouse_click(int button, int x, int y, t_env *env)
 {
@@ -36,5 +63,5 @@ int	g_mouse_click(int button, int x, int y, t_env *env)
 			ray.map_y >= 0 && ray.map_y < env->map.height)
 				env->map.map[(ray.map_y * env->map.width) + ray.map_x] = '\0';
 	}
-	return (0);
+	return (g_mouse(x, y, env));
 }

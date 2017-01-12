@@ -6,7 +6,7 @@
 #    By: hsabouri <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/08/19 10:32:42 by hsabouri          #+#    #+#              #
-#    Updated: 2017/01/12 12:29:54 by hsabouri         ###   ########.fr        #
+#    Updated: 2017/01/12 15:25:28 by hsabouri         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = wolf3d
 LIBPATH = libft
 LIBNAME = libft.a
 LIB = $(LIBNAME:%=$(LIBPATH)/%)
-CFLAGS = -Wall -Wextra -I$(LIBINC) -I$(INC)
+CFLAGS = -Wall -Wextra -Werror -I$(LIBINC) -I$(INC)
 CFLAGS += -O2 -march=native
 #CFLAGS += -g -fsanitize=address
 LDFLAGS = -L $(LIBPATH) -l$(LIBNAME:lib%.a=%) -lmlx -framework OpenGL\

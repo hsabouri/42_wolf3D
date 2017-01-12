@@ -6,7 +6,7 @@
 /*   By: hsabouri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/11 15:39:50 by hsabouri          #+#    #+#             */
-/*   Updated: 2017/01/12 12:12:32 by hsabouri         ###   ########.fr       */
+/*   Updated: 2017/01/12 15:18:28 by hsabouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ t_raycast	m_raytrace(t_env *env, t_raycast ray)
 	int i;
 
 	i = 0;
-	while (i < env->map.fog_dis * 1.5)
+	while (i < env->map.fog_dis * 2)
 	{
 		if (ray.side_x < ray.side_y)
 		{
@@ -83,10 +83,10 @@ t_raycast	m_raytrace(t_env *env, t_raycast ray)
 		}
 		if (ray.map_x < 0 || ray.map_x >= env->map.width || ray.map_y < 0 ||
 		ray.map_y >= env->map.width ||
-		env->map.map[(ray.map_y * env->map.width) + ray.map_x] == '\1')
+		env->map.map[(ray.map_y * env->map.width) + ray.map_x] == '\1' ||
+		env->map.map[(ray.map_y * env->map.width) + ray.map_x] == '\3')
 			break ;
 		i++;
 	}
-	ray = m_orientation(env, ray);
-	return (ray);
+	return (m_orientation(env, ray));
 }
