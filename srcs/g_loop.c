@@ -6,7 +6,7 @@
 /*   By: hsabouri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/06 15:14:52 by hsabouri          #+#    #+#             */
-/*   Updated: 2017/01/12 15:22:44 by hsabouri         ###   ########.fr       */
+/*   Updated: 2017/01/15 16:10:21 by hsabouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,15 @@ t_color		g_col_dis(t_env env, t_color color, double dis, t_raycast ray)
 	float ig;
 	float ib;
 
-	if (env.map.map[ray.map_x + (ray.map_y * env.map.width)] == '\3')
+	if (ray.map_x >= 0 && ray.map_x < env.map.width &&
+	ray.map_y >= 0 && ray.map_y < env.map.height)
 	{
-		color.red = 255;
-		color.green = 100;
-		color.blue = 100;
+		if (env.map.map[ray.map_x + (ray.map_y * env.map.width)] == '\3')
+		{
+			color.red = 255;
+			color.green = 100;
+			color.blue = 100;
+		}
 	}
 	ir = (env.map.fog.red - color.red) / env.map.fog_dis;
 	ig = (env.map.fog.green - color.green) / env.map.fog_dis;
